@@ -14,7 +14,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = {\"reportDate\": \"2026-10-12\", \"newOrders\": 12, \"processedOrders\": 10, \"failedOrders\": 2, \"status\": \"SIMULATED_ONLY\"};\nreturn [{ json: { ...data, workflow: \"DR Demo - Daily Report Test\", executedAt: new Date().toISOString() } }];"
+        "jsCode": "\nconst data = {\n  reportDate: new Date().toISOString().slice(0, 10),\n  newOrders: 18,\n  processedOrders: 15,\n  failedOrders: 3,\n  successRatePercent: 83.33,\n  reportVersion: \"v2\",\n  changeNote: \"Testing GitHub backup update operation\",\n  status: \"SIMULATED_ONLY\"\n};\n\nreturn [{\n  json: {\n    ...data,\n    workflow: \"DR Demo - Daily Report Test\",\n    executedAt: new Date().toISOString()\n  }\n}];\n"
       },
       "id": "fb000192-b269-41c4-95d9-ddaaff441bfd",
       "name": "Generate Dummy Data",
@@ -60,6 +60,11 @@
             "index": 0
           }
         ]
+      ]
+    },
+    "Mark Test Successful": {
+      "main": [
+        []
       ]
     }
   },
