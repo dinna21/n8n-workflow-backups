@@ -1,0 +1,72 @@
+{
+  "name": "DR Demo - Invoice Test",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b71c7251-9360-4463-b082-067f5b62f9fd",
+      "name": "When clicking Execute workflow",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = {\"invoiceNumber\": \"DEMO-INV-001\", \"customer\": \"Sample Customer\", \"items\": [{\"description\": \"Demo service\", \"quantity\": 2, \"unitPrice\": 1500}], \"currency\": \"LKR\", \"status\": \"SIMULATED_ONLY\"};\nreturn [{ json: { ...data, workflow: \"DR Demo - Invoice Test\", executedAt: new Date().toISOString() } }];"
+      },
+      "id": "723756d8-281c-4193-bfd8-c5b62aac8765",
+      "name": "Generate Dummy Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        96,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({ json: { ...item.json, result: 'SUCCESS', note: 'Demo completed locally; no external action performed.' } }));"
+      },
+      "id": "3046f06c-f108-4cd7-8064-4521d7e8a48c",
+      "name": "Mark Test Successful",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        -16
+      ]
+    }
+  ],
+  "connections": {
+    "When clicking Execute workflow": {
+      "main": [
+        [
+          {
+            "node": "Generate Dummy Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Dummy Data": {
+      "main": [
+        [
+          {
+            "node": "Mark Test Successful",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "staticData": null,
+  "tags": []
+}
